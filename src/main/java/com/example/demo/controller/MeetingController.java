@@ -22,4 +22,28 @@ public class MeetingController {
             return ResponseEntity.status(500).body(null);
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Meeting> updateMeeting(@PathVariable Long id, @RequestBody Meeting meetingDetails) {
+        try {
+            Meeting updatedMeeting = meetingService.updateMeeting(id, meetingDetails);
+            if (updatedMeeting != null) {
+                return ResponseEntity.ok(updatedMeeting);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMeeting(@PathVariable Long id) {
+        try {
+            meetingService.deleteMeeting(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
 }
